@@ -47,7 +47,7 @@ ymaps.ready(function(){
     myMap = new ymaps.Map('map', {
         center: [40, 69],
         zoom: 4,
-        controls: ['typeSelector', 'rulerControl'],
+        controls: ['typeSelector', 'rulerControl', 'zoomControl'],
         type: 'yandex#satellite'
     });
     jQuery.getJSON('static/points.json', function(points) {
