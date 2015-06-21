@@ -175,22 +175,14 @@ function buildPath() {
         url = '/path?points=[' + url.substring(0, url.length - 1) + ']';
         $.getJSON(url, function(response){
             if (response.result === true) {
+                // Удаляем старый путь
                 deletePath();
-                var pointsForPath = [];
-                for (var j = 0; j < response.points.length; ++j) {
-                    var ind = response.points[j]
-                    pointsForPath.push([
-                        points[ind].lat,
-                        points[ind].lon
-                    ]);
-                    points[ind].geoObject.options.set('preset', 'islands#blueCircleIcon');
-                    points[ind].geoObject.properties.set('iconContent', '<span class="inside">' + (j + 1) + '</span>');
-                }
+                // Создаем новый путь
                 path = new ymaps.GeoObject(
                     {
                         geometry: {
                             type: "LineString",
-                            coordinates: pointsForPath
+                            coordinates: response.points
                         }
                     }, {
                         strokeColor: "#FFFF00",
@@ -198,6 +190,12 @@ function buildPath() {
                     }
                 );
                 myMap.geoObjects.add(path);
+                // Нумеруем точки
+                for (var i = 0; i < response.indexes.length; ++i) {
+                    var index = response.indexes[i];
+                    points[index].geoObject.options.set('preset', 'islands#blueCircleIcon');
+                    points[index].geoObject.properties.set('iconContent', '<span class="inside">' + (i + 1) + '</span>');
+                }
             } else {
                 alert('Что-то пошло не так!');
             }
