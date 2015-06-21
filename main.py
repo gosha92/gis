@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from flask import Flask, redirect, url_for, request, jsonify
 
@@ -44,11 +46,29 @@ def deletePoint():
 
 @app.route('/path')
 def generatePath():
-    try:
-        points = eval(request.args.get('points'))
-    except:
-        return jsonify(result=False)
-    return jsonify(result=True, points=points)
+    # try:
+    # получаем от клиента индексы точек, которые нужно посетить
+    indexes = eval(request.args.get('points'))
+    # по индексам формируем массив точек с координатами
+    pointsForPath = []
+    with open('static/points.json', 'r') as f:
+        points = json.load(f)
+    for i in indexes:
+        pointsForPath.append(
+            {
+                "lat": points[i]["lat"],
+                "lon": points[i]["lon"],
+                "index": i
+            }
+        );
+    # path = makePath(pointsForPath) <- отрабатывает алгоритм
+    # возвращаем клиенту только индексы точек
+    path = []
+    for p in pointsForPath:
+        path.append(p["index"]);
+    # except:
+        # return jsonify(result=False)
+    return jsonify(result=True, points=path)
 
 @app.after_request
 def add_header(response):

@@ -110,13 +110,8 @@ $('#createPointButton').on('click', function(e) {
 
 // Удаление точки из базы (а 
 // также с карты и из списка)
-// $(document).on('click', '.deletePointButton', function(){
-//     $this = $(this);
-//     index = $this.data('index');
-//     $.ajax('/del?index=' + index);
-//     myMap.geoObjects.remove(points[index]);
-//     $this.parent().remove();
-// });
+// ОТКЛЮЧИЛ, МОЖНО УДАЛИТЬ, ЗАЙДЯ
+// ПО АДРЕСУ /del?index=N
 
 // Нанесение точки на карту
 $(document).on('click', '.addPointToMapCheckbox', function(){
@@ -129,6 +124,7 @@ $(document).on('click', '.addPointToMapCheckbox', function(){
         points[index].onMap = false;
         myMap.geoObjects.remove(points[index].geoObject);
     }
+    deletePath();
 });
 
 // Удаление точки с карты
@@ -138,6 +134,7 @@ $(document).on('click', '.deletePointFromMapButton', function(){
     points[index].onMap = false;
     myMap.geoObjects.remove(points[index].geoObject);
     points[index].element.find('input').attr('checked', false);
+    deletePath();
 });
 
 // Нанести все точки на карту
@@ -147,6 +144,7 @@ $('#checkAll').click(function(){
         myMap.geoObjects.add(points[i].geoObject);
         points[i].element.find('input').prop('checked', true);
     }
+    deletePath();
 });
 
 // Удалить все точки с карты
@@ -156,6 +154,7 @@ $('#uncheckAll').click(function(){
         myMap.geoObjects.remove(points[i].geoObject);
         points[i].element.find('input').prop('checked', false);
     }
+    deletePath();
 });
 
 // Отправить на сервер точки для
@@ -167,7 +166,7 @@ function buildPath() {
     for (var i = 0; i < points.length; ++i) {
         if (points[i].onMap === true) {
             emptyMap = false;
-            url += '[' + points[i].lat + ',' + points[i].lon + '],';
+            url += i + ',';
         }
     }
     if (emptyMap === true) {
@@ -177,11 +176,21 @@ function buildPath() {
         $.getJSON(url, function(response){
             if (response.result === true) {
                 deletePath();
+                var pointsForPath = [];
+                for (var j = 0; j < response.points.length; ++j) {
+                    var ind = response.points[j]
+                    pointsForPath.push([
+                        points[ind].lat,
+                        points[ind].lon
+                    ]);
+                    points[ind].geoObject.options.set('preset', 'islands#blueCircleIcon');
+                    points[ind].geoObject.properties.set('iconContent', '<span class="inside">' + (j + 1) + '</span>');
+                }
                 path = new ymaps.GeoObject(
                     {
                         geometry: {
                             type: "LineString",
-                            coordinates: response.points
+                            coordinates: pointsForPath
                         }
                     }, {
                         strokeColor: "#FFFF00",
@@ -203,4 +212,6 @@ function deletePath() {
         myMap.geoObjects.remove(path);
         path = undefined;
     }
+    for (var i = 0; i < points.length; ++i)
+        points[i].geoObject.options.set('preset', 'islands#blueCircleDotIcon');
 }
