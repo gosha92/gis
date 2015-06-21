@@ -44,16 +44,19 @@ function createPoint(point) {
 // кнопок "Добавить маршрут",
 // "Удалить маршрут"
 ymaps.ready(function(){
+    // Карта
     myMap = new ymaps.Map('map', {
         center: [40, 69],
         zoom: 4,
         controls: ['typeSelector', 'rulerControl', 'zoomControl'],
         type: 'yandex#satellite'
     });
+    // Получаем точки
     jQuery.getJSON('static/points.json', function(points) {
         for(var i = 0; i < points.length; ++i)
             createPoint(points[i])
     });
+    // Кнопка "Построить маршрут"
     buildPathButton = new ymaps.control.Button({
         data: {
             content: 'Построить маршрут'
@@ -63,6 +66,7 @@ ymaps.ready(function(){
             selectOnClick: false
         }
     });
+    // Кнопка "Удалить маршрут"
     myMap.controls.add(buildPathButton, {float: 'right'});
     buildPathButton.events.add('click', buildPath);
     deletePathButton = new ymaps.control.Button({
@@ -76,6 +80,22 @@ ymaps.ready(function(){
     });
     myMap.controls.add(deletePathButton, {float: 'right'});
     deletePathButton.events.add('click', deletePath);
+    // Клик по карте
+    // myMap.events.add('click', function(e) {
+    //     var coords = e.get('coords');
+    //     var lat = coords[0].toPrecision(6);
+    //     var lon = coords[1].toPrecision(6);
+    //     var name = 'island1';
+    //     var desc = '';
+    //     createPoint({
+    //         lon: lon,
+    //         lat: lat,
+    //         name: name,
+    //         desc: desc
+    //     });
+    //     $.getJSON('/add?name=' + name + '&desc=' + desc + '&lon=' + lon + '&lat=' + lat);
+    //     $('#checkAll').trigger('click');
+    // });
 });
 
 // Создание новой точки в базе,
