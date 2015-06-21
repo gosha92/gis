@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+    <title>Пример ГИС системы для экологов</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="http://yandex.st/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU&coordorder=longlat"></script>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <div id="menu">
+        <form id="addPointForm" method="GET" action="/add">
+            Имя объекта <input id="pointNameInput" name="name" type="text"/>
+            Описание объекта <input id="pointDescInput" name="desc" type="text"/>
+            Широта <input id="pointLonInput" name="lon" type="text"/>
+            Долгота <input id="pointLatInput" name="lat" type="text"/>
+            <button id="createPointButton">Создать точку</button>
+        </form>
+        <div id="pointsContainer"></div>
+        <div id="checkUncheckAll">
+            <div id="checkAll">отметить все</div>
+            /<div id="uncheckAll">снять все</div>
+        </div>
+    </div>
+    <div id="map" class="YMaps YMaps-cursor-grab"></div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

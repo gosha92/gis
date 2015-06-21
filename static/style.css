@@ -1,0 +1,92 @@
+html, body, #map {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Tahoma;
+    font-size: 14px;
+}
+#map {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#addPointForm {
+    background: #eee;
+    position: relative;
+    z-index: 1;
+    height: 229px;
+    padding-top: 7px;
+    text-align: right;
+    padding-right: 10px;
+    border-bottom: 1px solid #bbb;
+}
+input {
+    display: block;
+    width: 160px;
+    margin-left: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#menu {
+    position: relative;
+    z-index: 1;
+    width: 180px;
+    height: 100%;
+    /*background: white;*/
+}
+#pointsContainer {
+    background: white;
+    overflow-y: scroll;
+    position: absolute;
+    width: 180px;
+    top: 237px;
+    bottom: 20px;
+}
+#checkUncheckAll {
+    z-index: 1;
+    position: absolute;
+    height: 20px;
+    bottom: 0;
+    background: #eee;
+    width: 180px;
+    font-size: 12px;
+}
+#checkAll, #uncheckAll {
+    color: #222;
+    display: inline-block;
+    margin-top: 3px;
+    margin-left: 3px;
+    cursor: pointer;
+}
+#checkAll:hover, #uncheckAll:hover {
+    color: blue;
+}
+.point {
+    padding: 2px;
+    vertical-align: middle;
+}
+.point:hover {
+    background: #eee;
+}
+.addPointToMapButton {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+.deletePointButton {
+    display: inline-block;
+    position: absolute;
+    right: 40px;   
+}
+#createPointButton {
+    margin-top: 5px;
+}
+.point > input {
+    display: inline-block;
+    padding: 0;
+    width: 17px;
+    height: 15px;
+    margin: 1px 2px 1px 0;
+    vertical-align: bottom;
+}
