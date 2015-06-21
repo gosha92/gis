@@ -21,8 +21,8 @@ function createPoint(point) {
         geometry: {
             type: "Point",
             coordinates: [
-                point.lon,
-                point.lat
+                point.lat,
+                point.lon
             ],
         },
         properties: {
@@ -41,7 +41,8 @@ function createPoint(point) {
 // Создание карты, получение
 // набора точек из базы и
 // создание точек; добавление
-// кнопки "Маршрут"
+// кнопок "Добавить маршрут",
+// "Удалить маршрут"
 ymaps.ready(function(){
     myMap = new ymaps.Map('map', {
         center: [40, 69],
@@ -166,7 +167,7 @@ function buildPath() {
     for (var i = 0; i < points.length; ++i) {
         if (points[i].onMap === true) {
             emptyMap = false;
-            url += '[' + points[i].lon + ',' + points[i].lat + '],';
+            url += '[' + points[i].lat + ',' + points[i].lon + '],';
         }
     }
     if (emptyMap === true) {
