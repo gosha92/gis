@@ -30,7 +30,8 @@ def addPoint():
                 "lon": float(request.args.get('lon')),
                 "lat": float(request.args.get('lat')),
                 "name": request.args.get('name'),
-                "desc": request.args.get('desc')
+                "desc": request.args.get('desc'),
+                "down": request.args.get('down')
             }
         )
         with open('static/points.json', 'w') as f:

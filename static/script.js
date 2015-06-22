@@ -26,7 +26,7 @@ function createPoint(point) {
             ],
         },
         properties: {
-            balloonContent: '<b>' + point.name + '</b><br/>' + point.desc + '<br/><button class="deletePointFromMapButton" data-index="' + index + '">Удалить точку</button>',
+            balloonContent: '<b>' + point.name + '</b><br/>' + point.desc + '<br/>Глубина: ' + point.down + ' м<br/><button class="deletePointFromMapButton" data-index="' + index + '">Удалить точку</button>',
             hintContent: point.name
         },
     }, {
@@ -85,13 +85,15 @@ ymaps.ready(function(){
     //     var coords = e.get('coords');
     //     var lat = coords[0].toPrecision(6);
     //     var lon = coords[1].toPrecision(6);
-    //     var name = 'island1';
-    //     var desc = '';
+    //     var name = 'Объект-' + (points.length + 1);
+    //     var desc = 'Тестовый объект';
+    //     var down = '' + Math.round(Math.random()*100) + 1;
     //     createPoint({
     //         lon: lon,
     //         lat: lat,
     //         name: name,
-    //         desc: desc
+    //         desc: desc,
+    //         down: down
     //     });
     //     $.getJSON('/add?name=' + name + '&desc=' + desc + '&lon=' + lon + '&lat=' + lat);
     //     $('#checkAll').trigger('click');
@@ -104,24 +106,28 @@ $pointNameInput = $('#pointNameInput');
 $pointDescInput = $('#pointDescInput');
 $pointLonInput = $('#pointLonInput');
 $pointLatInput = $('#pointLatInput');
+$pointDownInput = $('#pointDownInput');
 $('#createPointButton').on('click', function(e) {
     e.preventDefault();
-    name = $pointNameInput.val();
-    desc = $pointDescInput.val();
-    lon = $pointLonInput.val();
-    lat = $pointLatInput.val();
-    $.getJSON('/add?name=' + name + '&desc=' + desc + '&lon=' + lon + '&lat=' + lat, function(response) {
+    var name = $pointNameInput.val();
+    var desc = $pointDescInput.val();
+    var lon = $pointLonInput.val();
+    var lat = $pointLatInput.val();
+    var down = $pointDownInput.val();
+    $.getJSON('/add?name=' + name + '&desc=' + desc + '&lon=' + lon + '&lat=' + lat + '&down=' + down, function(response) {
         if (response.result === true) {
             createPoint({
                 name: name,
                 desc: desc,
                 lon: lon,
-                lat: lat
+                lat: lat,
+                down: down
             });
             $pointNameInput.val('');
             $pointDescInput.val('');
             $pointLonInput.val('');
             $pointLatInput.val('');
+            $pointDownInput.val('');
         } else {
             alert("Параметры точки введены неправильно!");
         }

@@ -15,7 +15,7 @@ html, body, #map {
     background: #eee;
     position: relative;
     z-index: 1;
-    height: 229px;
+    height: 276px;
     padding-top: 7px;
     text-align: right;
     padding-right: 10px;
@@ -40,7 +40,7 @@ input {
     overflow-y: scroll;
     position: absolute;
     width: 180px;
-    top: 237px;
+    top: 284px;
     bottom: 20px;
 }
 #checkUncheckAll {
